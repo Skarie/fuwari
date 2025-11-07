@@ -7,6 +7,7 @@ tags:
   - 教程
   - CSS
 category: Fuwari
+image: https://cdn.mengze.vip/gh/Skarie/hexoimg/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91AMGGT-%E6%A2%85%E8%B5%9B%E5%BE%B7%E6%96%AF.png
 description: 详细讲解如何在基于 Astro 的 Fuwari 博客主题中添加全局全屏背景图片，让背景图片在所有页面显示，同时保持内容清晰可读。
 draft: false
 ---

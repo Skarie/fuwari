@@ -6,6 +6,7 @@ tags:
   - Astro
   - 教程
 category: Fuwari
+image: https://cdn.mengze.vip/gh/Skarie/hexoimg/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E4%BA%8C%E6%AC%A1%E5%85%83%E7%BE%8E%E5%B0%91%E5%A5%B3-%E5%A4%A7%E9%95%BF%E8%85%BF.png
 description: 详细讲解在 Fuwari 博客中如何正确实现文章之间的跳转，包括路径格式、大小写问题、注意事项和最佳实践。
 draft: false
 ---

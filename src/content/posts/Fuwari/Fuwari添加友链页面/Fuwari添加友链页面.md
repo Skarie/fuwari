@@ -6,6 +6,7 @@ tags:
   - Astro
   - 教程
 category: Fuwari
+image: https://cdn.mengze.vip/gh/Skarie/hexoimg/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%AF%8C%E5%A3%AB%E5%B1%B1-%E5%AF%8C%E5%A3%AB%E5%B1%B1%E5%80%92%E5%BD%B1.png
 description: 详细讲解如何在基于 Astro 的 Fuwari 博客主题中添加一个功能完整、美观的友链页面，包括导航栏配置、友链卡片组件、本地头像支持等。
 draft: false
 ---

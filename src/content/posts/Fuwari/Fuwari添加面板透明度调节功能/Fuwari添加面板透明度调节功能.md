@@ -4,6 +4,7 @@ published: 2025-11-07
 description: 详细教程：如何在 Fuwari 主题的 Theme Color 面板中添加透明度调节功能，实现面板背景透明度的动态控制。
 tags: [Fuwari, Astro, 主题定制, 透明度, UI/UX]
 category: Fuwari
+image: https://cdn.mengze.vip/gh/Skarie/hexoimg/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%92%96%E5%95%A1-%E5%92%96%E5%95%A1%E5%B1%8B-%E5%A4%9C%E6%99%AF.png
 draft: false
 ---
 

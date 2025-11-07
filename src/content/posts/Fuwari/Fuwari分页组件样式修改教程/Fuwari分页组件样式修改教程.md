@@ -8,6 +8,7 @@ tags:
   - CSS
   - Tailwind
 category: Fuwari
+image: https://cdn.mengze.vip/gh/Skarie/hexoimg/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%92%96%E5%95%A1%E9%A6%86-%E6%89%8B%E7%BB%98%E9%A3%8E-%E6%A0%91%E6%9C%A8.png
 description: 超详细教程：如何修改 Fuwari 博客的分页组件样式，将原本连接在一起的页码改为独立的圆角方块，让每个页码按钮清晰分离。
 draft: false
 ---

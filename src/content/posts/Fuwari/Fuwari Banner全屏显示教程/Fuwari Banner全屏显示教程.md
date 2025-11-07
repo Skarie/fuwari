@@ -7,6 +7,7 @@ tags:
   - 教程
   - CSS
 category: Fuwari
+image: https://cdn.mengze.vip/gh/Skarie/hexoimg/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%8D%A1%E9%80%9A-%E5%B1%B1%E4%B8%98-%E7%8C%AB.png
 description: 详细讲解如何在 Fuwari 博客中实现 banner 图全屏显示，同时保持其他元素（导航栏、内容区域等）的布局位置不变。
 draft: false
 ---
@@ -621,5 +622,5 @@ export const BANNER_HEIGHT_HOME_FOR_LAYOUT = BANNER_HEIGHT_FOR_LAYOUT + BANNER_H
 
 ---
 
-**最后更新**：2025年1月15日
+**最后更新**：2025年11月17日
 
