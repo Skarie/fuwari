@@ -25,6 +25,9 @@ export function setHue(hue: number): void {
 		return;
 	}
 	r.style.setProperty("--hue", String(hue));
+
+	// 色相改变后重新应用透明度
+	applyOpacityOnThemeChange();
 }
 
 export function applyThemeToDocument(theme: LIGHT_DARK_MODE) {
@@ -49,6 +52,10 @@ export function applyThemeToDocument(theme: LIGHT_DARK_MODE) {
 		"data-theme",
 		expressiveCodeConfig.theme,
 	);
+
+	// 主题切换后重新应用透明度
+	// 因为亮色和暗色模式使用不同的颜色计算方式，切换主题时需要重新计算
+	applyOpacityOnThemeChange();
 }
 
 export function setTheme(theme: LIGHT_DARK_MODE): void {
@@ -58,4 +65,84 @@ export function setTheme(theme: LIGHT_DARK_MODE): void {
 
 export function getStoredTheme(): LIGHT_DARK_MODE {
 	return (localStorage.getItem("theme") as LIGHT_DARK_MODE) || DEFAULT_THEME;
+}
+
+/**
+ * 获取默认透明度值
+ * @returns 默认透明度，1.0 表示完全不透明
+ */
+export function getDefaultOpacity(): number {
+	return 1.0; // 默认完全不透明
+}
+
+/**
+ * 从 localStorage 获取保存的透明度值
+ * 如果未保存过，返回默认值
+ * @returns 透明度值，范围 0-1
+ */
+export function getOpacity(): number {
+	const stored = localStorage.getItem("panelOpacity");
+	// 如果 localStorage 中有值，解析为浮点数；否则返回默认值
+	return stored ? Number.parseFloat(stored) : getDefaultOpacity();
+}
+
+/**
+ * 设置透明度并应用到 CSS 变量
+ * 这是核心函数，负责：
+ * 1. 保存透明度到 localStorage
+ * 2. 根据当前主题模式计算背景颜色
+ * 3. 动态设置 CSS 变量
+ *
+ * @param opacity 透明度值，范围 0-1（0=完全透明，1=完全不透明）
+ */
+export function setOpacity(opacity: number): void {
+	// 1. 保存到 localStorage，实现持久化
+	localStorage.setItem("panelOpacity", String(opacity));
+
+	// 2. 获取根元素（:root），用于设置 CSS 变量
+	const r = document.querySelector(":root") as HTMLElement;
+	if (!r) {
+		// 如果获取不到根元素（理论上不应该发生），直接返回
+		return;
+	}
+
+	// 3. 检查当前是否为暗色模式
+	const isDark = r.classList.contains("dark");
+
+	// 4. 根据主题模式设置不同的背景颜色
+	if (isDark) {
+		// === 暗色模式 ===
+		// 原始颜色定义：oklch(0.23 0.015 var(--hue))
+		// 为了简化，我们将 lightness 0.23 转换为灰度值
+		// lightness 范围是 0-1，需要乘以 255 转换为 RGB 值
+		const gray = Math.round(0.23 * 255); // 约等于 59
+
+		// 设置卡片背景：rgba(59, 59, 59, opacity)
+		// 这样只有背景变透明，文字等子元素不受影响
+		r.style.setProperty(
+			"--card-bg",
+			`rgba(${gray}, ${gray}, ${gray}, ${opacity})`,
+		);
+
+		// 浮动面板的背景色稍暗一些
+		const grayPanel = Math.round(0.19 * 255); // 约等于 48
+		r.style.setProperty(
+			"--float-panel-bg",
+			`rgba(${grayPanel}, ${grayPanel}, ${grayPanel}, ${opacity})`,
+		);
+	} else {
+		// === 亮色模式 ===
+		// 原始颜色是白色，直接使用 rgba(255, 255, 255, opacity)
+		r.style.setProperty("--card-bg", `rgba(255, 255, 255, ${opacity})`);
+		r.style.setProperty("--float-panel-bg", `rgba(255, 255, 255, ${opacity})`);
+	}
+}
+
+/**
+ * 当主题切换时，重新应用透明度设置
+ * 这个函数会在主题切换和色相改变时被调用
+ */
+export function applyOpacityOnThemeChange(): void {
+	const opacity = getOpacity();
+	setOpacity(opacity);
 }

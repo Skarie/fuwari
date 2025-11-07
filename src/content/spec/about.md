@@ -1,9 +1,55 @@
-# About
-This is the demo site for [Fuwari](https://github.com/saicaca/fuwari).
+# 在代码与咖啡香之间：一个技术诗人的自白
 
-::github{repo="saicaca/fuwari"}
+## 关于我
+我是翊羽，一个在二进制与十四行诗之间走钢索的人。白天，我是代码炼金术士，把咖啡因转化为可运行的Python脚本；夜晚，我是文字捕梦者，在键盘上敲击出星群般的散文诗。
 
-> ### Sources of images used in this site
-> - [Unsplash](https://unsplash.com/)
-> - [星と少女](https://www.pixiv.net/artworks/108916539) by [Stella](https://www.pixiv.net/users/93273965)
-> - [Rabbit - v1.4 Showcase](https://civitai.com/posts/586908) by [Rabbit_YourMajesty](https://civitai.com/user/Rabbit_YourMajesty)
+有人说这是精神分裂，我称之为「优雅的量子叠加态」。
+
+## 技术谱系
+我的技术栈像一本被反复批注的诗集：
+
+```python
+def my_skills():
+    core = ["Python", "云架构", "数据迷宫导航者"]
+    tools = ["Vim(永远的模式战争)", "Git(时光倒流术)", "Docker(薛定谔的环境)"]
+    return f"{' | '.join(core)} \n 辅以 {', '.join(tools)}"
+```
+
+最近在量子计算领域练习「波函数折叠术」，试图让代码同时存在于bug与debug的叠加态。
+
+## 文字工坊
+当光标不再是闪烁的审判者，我的文字开始生长：
+
+> "在递归函数的最深处
+> 我遇见了十六岁的自己
+> 他正用铅笔刀
+> 雕刻着整个宇宙的
+> 时间复杂度"
+
+这些文字散落在[我的诗集](https://github.com/Skarie)和凌晨三点的朋友圈里，像代码注释里的哲学残章。
+
+## 生活切片
+- 📍 当前坐标：南昌某旮旯的第三宇宙速度轨道
+- 🎧 永恒BGM：后摇滚与白噪声的二重奏
+- 📖 枕边书：《纳南词全集》与《PHP从入门到精通》的量子纠缠
+- 🖋️ 文章的更新率：1篇/周（受不确定因素影响）
+
+## 存在主义实践
+相信：
+1. 每个bug都是宇宙的隐喻
+2. 最好的注释是未写的诗
+3. 在vim里挣扎是当代人的修行
+4. 茶渍是程序员的时间胶囊
+
+## 对话邀请
+如果你：
+- 发现过代码中的俳句结构
+- 相信技术文档应该获得普利策奖
+- 在算法中听见过月光的声音
+
+欢迎敲击我的数字门扉：
+`echo "你好，世界" | 发送至skarie@88.com`
+
+---
+
+**后记**：这篇文字诞生于某个暴雨的午夜，当IDE与文档编辑器在屏幕上跳起探戈，而我的意识在技术理性与诗性直觉的裂隙间，发现了这片栖息地。
