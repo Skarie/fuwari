@@ -3,7 +3,7 @@ title: Docker安装
 published: 2025-05-05
 tags: [docker]
 category: docker
-image: /public/articel/Docker安装.png
+image: /articel/Docker安装.png
 category_bar: "true"
 ---
 在国内的 Ubuntu 系统上安装 Docker，可按以下步骤操作：

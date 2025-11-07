@@ -4,7 +4,7 @@ published: 2025-05-06
 tags:
   - 云计算
 category: 云计算
-image: /public/articel/k8s的迷你版——minikube安装+部署mysql容器.png
+image: /articel/k8s的迷你版——minikube安装+部署mysql容器.png
 category_bar: "true"
 ---
 

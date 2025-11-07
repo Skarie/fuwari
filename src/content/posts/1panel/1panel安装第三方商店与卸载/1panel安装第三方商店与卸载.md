@@ -5,7 +5,7 @@ tags:
   - 1panel
 category: 1panel
 description: 1panel安装第三方商店与卸载
-image: /public/public//public/articel/1panel安装第三方商店与卸载.png
+image: /articel/1panel安装第三方商店与卸载.png
 category_bar: "true"
 ---
 ***我知道你很苦恼官方商店应用太少，没关系现在来装第三方商店***
