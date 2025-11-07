@@ -4,7 +4,7 @@ published: 2025-05-05
 tags:
   - waline
 category: waline
-image: /public/articel/waline踩坑指南.png
+image: /articel/waline踩坑指南.png
 category_bar: "true"
 ---
 记录一下，现在是凌晨三点

@@ -4,7 +4,7 @@ published: 2025-04-30
 tags:
   - Fluid
 category: Fluid修改
-image: /public/articel/对「Fluid主题footer颜色定义」补充定稿.png
+image: /articel/对「Fluid主题footer颜色定义」补充定稿.png
 # https://haowallpaper.com/link/common/file/previewFileImg/86a6e519c7a8e4c4586e8fb8f7d8f07c86a6e519c7a8e4c4586e8fb8f7d8f07c
 category_bar: "true"
 ---

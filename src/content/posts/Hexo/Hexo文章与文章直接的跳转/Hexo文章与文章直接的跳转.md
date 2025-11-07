@@ -4,7 +4,7 @@ published: 2025-04-20
 tags:
   - Hexo
 category: Hexo
-image: /public/articel/Hexo文章与文章直接的跳转.png
+image: /articel/Hexo文章与文章直接的跳转.png
 category_bar: "true"
 ---
 

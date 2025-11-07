@@ -4,7 +4,7 @@ published: 2025-05-06
 tags:
   - windows
 category: windows
-image: /public/articel/windows安装Linux子系统.png
+image: /articel/windows安装Linux子系统.png
 category_bar: "true"
 ---
 

@@ -4,7 +4,7 @@ published: 2025-04-26
 tags:
   - Hexo
 category: Hexo
-image: /public/articel/Hexo创建个人博客.png
+image: /articel/Hexo创建个人博客.png
 category_bar: "true"
 ---
 

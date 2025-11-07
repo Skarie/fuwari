@@ -4,7 +4,7 @@ published: 2025-04-24
 tags:
   - Nginx
 category: Nginx
-image: /public/articel/nginx反代服务器80.png
+image: /articel/nginx反代服务器80.png
 category_bar: "true"
 ---
 ## 序言

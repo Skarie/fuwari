@@ -4,7 +4,7 @@ published: 2025-03-01
 tags:
   - Hexo
 category: Hexo
-image: /public/articel/Hexo图片显示.png
+image: /articel/Hexo图片显示.png
 category_bar: "true"
 ---
 
