@@ -32,8 +32,9 @@ draft: false
 完成本教程后，你的 Theme Color 面板将新增一个透明度滑块，用户可以：
 - 通过滑块调节面板透明度（0-100%）
 - 实时查看当前透明度百分比
-- 一键重置为默认值（100%）
+- 一键重置为默认值（可在 `config.ts` 中配置）
 - 设置会自动保存，刷新后仍然有效
+- 支持在配置文件中设置默认透明度值
 
 ## 实现思路
 
@@ -70,6 +71,13 @@ draft: false
 ```
 fuwari/
 ├── src/
+│   ├── types/
+│   │   └── config.ts                     # 类型定义（新增透明度配置类型）
+│   ├── config.ts                         # 配置文件（新增透明度配置项）
+│   ├── components/
+│   │   ├── ConfigCarrier.astro           # 配置传递组件（传递透明度配置）
+│   │   └── widget/
+│   │       └── DisplaySettings.svelte    # 显示设置组件（UI）
 │   ├── i18n/
 │   │   ├── i18nKey.ts                    # 国际化键定义
 │   │   └── languages/
@@ -77,14 +85,14 @@ fuwari/
 │   │       └── en.ts                     # 英文翻译
 │   ├── utils/
 │   │   └── setting-utils.ts              # 设置工具函数（核心逻辑）
-│   ├── components/
-│   │   └── widget/
-│   │       └── DisplaySettings.svelte    # 显示设置组件（UI）
 │   └── layouts/
 │       └── Layout.astro                  # 布局文件（初始化）
 ```
 
 **各文件的作用：**
+- `types/config.ts`：定义配置类型，包括透明度配置
+- `config.ts`：配置文件，设置默认透明度值
+- `ConfigCarrier.astro`：将配置传递到前端 HTML
 - `i18nKey.ts` 和语言文件：提供多语言支持
 - `setting-utils.ts`：核心逻辑，处理透明度的获取、设置和应用
 - `DisplaySettings.svelte`：UI 组件，提供用户交互界面
@@ -221,11 +229,73 @@ export const en: Translation = {
 - 查看浏览器控制台是否有错误信息
 - 确认所有文件都已保存
 
-### 第二步：实现透明度工具函数
+### 第二步：配置默认透明度（可选）
+
+在开始实现透明度功能之前，我们可以先在配置文件中设置默认透明度值。这样可以让新用户首次访问时使用你预设的透明度，而不是默认的 100% 不透明。
+
+#### 2.1 更新类型定义
+
+首先，需要在 `src/types/config.ts` 中添加透明度配置的类型定义：
+
+```typescript
+export type SiteConfig = {
+	// ... 其他配置 ...
+	themeColor: {
+		hue: number;
+		fixed: boolean;
+	};
+	panelOpacity: {
+		opacity: number; // 默认面板透明度，范围 0 到 1
+	};
+	// ... 其他配置 ...
+};
+```
+
+#### 2.2 添加配置项
+
+在 `src/config.ts` 文件中添加透明度配置：
+
+```typescript
+export const siteConfig: SiteConfig = {
+	// ... 其他配置 ...
+	themeColor: {
+		hue: 250,
+		fixed: false,
+	},
+	panelOpacity: {
+		opacity: 1.0, // 默认面板透明度，范围 0 到 1。例如：0=完全透明，1=完全不透明
+	},
+	// ... 其他配置 ...
+};
+```
+
+**配置说明：**
+- `opacity`: 默认透明度值，范围 0 到 1
+  - `1.0` = 完全不透明（默认）
+  - `0.9` = 90% 不透明，10% 透明
+  - `0.5` = 50% 不透明，50% 透明
+  - `0.0` = 完全透明（不推荐）
+
+#### 2.3 传递配置到前端
+
+在 `src/components/ConfigCarrier.astro` 中添加透明度配置的传递：
+
+```astro
+---
+import { siteConfig } from "../config";
+---
+
+<div id="config-carrier" data-hue={siteConfig.themeColor.hue} data-opacity={siteConfig.panelOpacity.opacity}>
+</div>
+```
+
+**注意：** 如果你不想在配置文件中设置默认值，可以跳过这一步，直接使用硬编码的默认值 1.0。但建议添加配置，这样可以方便地管理默认透明度。
+
+### 第三步：实现透明度工具函数
 
 在 `src/utils/setting-utils.ts` 中添加透明度相关的函数。这是整个功能的核心逻辑部分。
 
-#### 2.1 查看现有代码结构
+#### 3.1 查看现有代码结构
 
 首先，让我们看看 `setting-utils.ts` 文件的现有结构。打开文件，你应该能看到类似这样的代码：
 
@@ -252,19 +322,29 @@ export function getStoredTheme(): LIGHT_DARK_MODE { /* ... */ }
 
 我们将在文件末尾（`getStoredTheme` 函数之后）添加透明度相关的函数。
 
-#### 2.2 添加获取和设置透明度的函数
+#### 3.2 添加获取和设置透明度的函数
 
 在 `getStoredTheme()` 函数之后添加以下代码：
 
 ```typescript
 /**
  * 获取默认透明度值
+ * 优先从配置文件读取，如果没有配置则返回 1.0（完全不透明）
  * @returns 默认透明度，1.0 表示完全不透明
  */
 export function getDefaultOpacity(): number {
-	return 1.0; // 默认完全不透明
+	const fallback = "1.0";
+	const configCarrier = document.getElementById("config-carrier");
+	return Number.parseFloat(configCarrier?.dataset.opacity || fallback);
 }
+```
 
+**说明：**
+- 如果已在 `config.ts` 中配置了 `panelOpacity.opacity`，函数会从 `config-carrier` 元素读取该值
+- 如果没有配置或读取失败，则使用默认值 1.0（完全不透明）
+- 这样可以让博客管理员在配置文件中统一管理默认透明度
+
+```typescript
 /**
  * 从 localStorage 获取保存的透明度值
  * 如果未保存过，返回默认值
@@ -341,8 +421,10 @@ export function applyOpacityOnThemeChange(): void {
 **代码详解：**
 
 1. **`getDefaultOpacity()`**：
-   - 返回默认透明度值 1.0（100% 不透明）
-   - 这是一个纯函数，不依赖外部状态
+   - 从 `config-carrier` 元素读取配置的默认透明度值
+   - 如果配置文件中设置了 `panelOpacity.opacity`，则使用该值
+   - 如果没有配置或读取失败，返回默认值 1.0（100% 不透明）
+   - 这样可以让博客管理员在 `config.ts` 中统一管理默认透明度
 
 2. **`getOpacity()`**：
    - 从 `localStorage` 读取保存的透明度值
@@ -497,11 +579,11 @@ r.style.setProperty("--card-bg", "rgba(...)")  ← 更新 CSS 变量
 3. 切换回亮色模式，检查背景是否正确
 4. 改变色相，检查透明度是否保持
 
-### 第三步：更新 DisplaySettings 组件
+### 第四步：更新 DisplaySettings 组件
 
 在 `src/components/widget/DisplaySettings.svelte` 中添加透明度滑块。这是用户交互的界面部分。
 
-#### 3.1 查看现有组件结构
+#### 4.1 查看现有组件结构
 
 打开 `src/components/widget/DisplaySettings.svelte`，你应该能看到类似这样的结构：
 
@@ -530,7 +612,7 @@ $: if (hue || hue === 0) {
 </div>
 ```
 
-#### 3.2 更新脚本部分
+#### 4.2 更新脚本部分
 
 修改 `<script>` 部分，添加透明度相关的导入和逻辑：
 
@@ -617,7 +699,7 @@ $: if (条件) {
 - 如果不检查，可能会在初始化时调用 `setOpacity(undefined)`，导致错误
 - 这个检查确保只在值有效时才执行
 
-#### 3.3 添加透明度滑块 UI
+#### 4.3 添加透明度滑块 UI
 
 在主题色滑块下方添加透明度控制部分。找到主题色滑块的结束位置（`</div>` 标签），在其后添加以下代码：
 
@@ -786,11 +868,11 @@ $: if (条件) {
 </style>
 ```
 
-### 第四步：添加初始化代码
+### 第五步：添加初始化代码
 
 在 `src/layouts/Layout.astro` 中添加透明度初始化。这一步确保页面加载时自动应用保存的透明度设置。
 
-#### 4.1 查看现有导入语句
+#### 5.1 查看现有导入语句
 
 打开 `src/layouts/Layout.astro`，找到文件顶部的导入语句部分，应该能看到类似这样的代码：
 
@@ -798,7 +880,7 @@ $: if (条件) {
 import {getHue, getStoredTheme, setHue, setTheme} from "../utils/setting-utils";
 ```
 
-#### 4.2 更新导入语句
+#### 5.2 更新导入语句
 
 在导入语句中添加透明度相关的函数：
 
@@ -818,7 +900,7 @@ import {
 - `setOpacity`：用于应用透明度设置
 - 这些函数与 `getHue`、`setHue` 等函数来自同一个文件
 
-#### 4.3 查看现有加载函数
+#### 5.3 查看现有加载函数
 
 找到 `loadHue` 函数的位置，应该能看到类似这样的代码：
 
@@ -828,7 +910,7 @@ function loadHue() {
 }
 ```
 
-#### 4.4 添加透明度加载函数
+#### 5.4 添加透明度加载函数
 
 在 `loadHue` 函数之后添加透明度加载函数：
 
@@ -854,7 +936,7 @@ function loadOpacity() {
 - 但是 CSS 变量会被重置为 Stylus 中定义的默认值
 - 因此需要在页面加载时重新应用保存的透明度设置
 
-#### 4.5 在初始化函数中调用
+#### 5.5 在初始化函数中调用
 
 找到 `init()` 函数，在 `loadHue()` 之后添加 `loadOpacity()` 的调用：
 
@@ -1242,7 +1324,50 @@ export function setOpacity(opacity: number): void {
 
 为了方便参考，这里提供所有修改文件的完整代码片段：
 
-### 1. `src/i18n/i18nKey.ts`
+### 1. `src/types/config.ts`（更新类型定义）
+
+```typescript
+export type SiteConfig = {
+	// ... 其他配置 ...
+	themeColor: {
+		hue: number;
+		fixed: boolean;
+	};
+	panelOpacity: {
+		opacity: number; // 默认面板透明度，范围 0 到 1
+	};
+	// ... 其他配置 ...
+};
+```
+
+### 2. `src/config.ts`（添加配置项）
+
+```typescript
+export const siteConfig: SiteConfig = {
+	// ... 其他配置 ...
+	themeColor: {
+		hue: 250,
+		fixed: false,
+	},
+	panelOpacity: {
+		opacity: 1.0, // 默认面板透明度，范围 0 到 1
+	},
+	// ... 其他配置 ...
+};
+```
+
+### 3. `src/components/ConfigCarrier.astro`（传递配置）
+
+```astro
+---
+import { siteConfig } from "../config";
+---
+
+<div id="config-carrier" data-hue={siteConfig.themeColor.hue} data-opacity={siteConfig.panelOpacity.opacity}>
+</div>
+```
+
+### 4. `src/i18n/i18nKey.ts`
 
 ```typescript
 // ... 其他代码 ...
@@ -1252,7 +1377,7 @@ lightMode = "lightMode",
 // ... 其他代码 ...
 ```
 
-### 2. `src/i18n/languages/zh_CN.ts`
+### 5. `src/i18n/languages/zh_CN.ts`
 
 ```typescript
 // ... 其他代码 ...
@@ -1262,7 +1387,7 @@ lightMode = "lightMode",
 // ... 其他代码 ...
 ```
 
-### 3. `src/i18n/languages/en.ts`
+### 6. `src/i18n/languages/en.ts`
 
 ```typescript
 // ... 其他代码 ...
@@ -1272,13 +1397,15 @@ lightMode = "lightMode",
 // ... 其他代码 ...
 ```
 
-### 4. `src/utils/setting-utils.ts`（新增函数）
+### 7. `src/utils/setting-utils.ts`（新增函数）
 
 ```typescript
 // 在文件末尾添加以下函数
 
 export function getDefaultOpacity(): number {
-	return 1.0;
+	const fallback = "1.0";
+	const configCarrier = document.getElementById("config-carrier");
+	return Number.parseFloat(configCarrier?.dataset.opacity || fallback);
 }
 
 export function getOpacity(): number {
@@ -1310,7 +1437,7 @@ export function applyOpacityOnThemeChange(): void {
 }
 ```
 
-### 5. `src/utils/setting-utils.ts`（修改现有函数）
+### 8. `src/utils/setting-utils.ts`（修改现有函数）
 
 ```typescript
 // 修改 applyThemeToDocument 函数，在末尾添加：
@@ -1326,7 +1453,7 @@ export function setHue(hue: number): void {
 }
 ```
 
-### 6. `src/components/widget/DisplaySettings.svelte`（脚本部分）
+### 9. `src/components/widget/DisplaySettings.svelte`（脚本部分）
 
 ```svelte
 <script lang="ts">
@@ -1362,7 +1489,7 @@ $: if (opacity !== undefined) {
 </script>
 ```
 
-### 7. `src/components/widget/DisplaySettings.svelte`（UI 部分）
+### 10. `src/components/widget/DisplaySettings.svelte`（UI 部分）
 
 在主题色滑块后添加：
 

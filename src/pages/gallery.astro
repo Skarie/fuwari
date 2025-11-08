@@ -1,0 +1,380 @@
+---
+import { getImage, Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import { galleryCategories } from "../config/gallery";
+import MainGridLayout from "../layouts/MainGridLayout.astro";
+import { url } from "../utils/url-utils";
+import "photoswipe/style.css";
+
+// 处理图片路径和获取图片对象
+async function getImageData(itemSrc: string) {
+	// 如果是外部链接或 public 目录路径（以 / 开头），直接使用 URL
+	// 相册图片统一放在 /gallery/ 目录下，通过 URL 访问
+	if (
+		itemSrc.startsWith("http://") ||
+		itemSrc.startsWith("https://") ||
+		itemSrc.startsWith("/")
+	) {
+		return {
+			type: "url" as const,
+			src: itemSrc.startsWith("/") ? url(itemSrc) : itemSrc,
+		};
+	}
+	// 如果是 assets 目录的图片（不推荐用于相册，建议使用 /gallery/ 目录）
+	// 保留此功能以兼容旧配置
+	try {
+		const imageSrc = new URL(`../${itemSrc}`, import.meta.url);
+		// @ts-expect-error - getImage accepts URL but types may not reflect this
+		const image = await getImage({ src: imageSrc });
+		return { type: "image" as const, image };
+	} catch (error) {
+		console.error(`Failed to load image: ${itemSrc}`, error);
+		return { type: "url" as const, src: itemSrc };
+	}
+}
+
+// 处理所有图片数据
+const imageDataMap = new Map();
+for (const category of galleryCategories) {
+	for (const item of category.items) {
+		if (item.type === "image") {
+			const data = await getImageData(item.src);
+			imageDataMap.set(`${category.name}-${item.src}`, data);
+		}
+	}
+}
+---
+
+<MainGridLayout title="相册" description="我的相册 - 照片和视频集合">
+	<div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32 mb-6">
+		<div class="card-base z-10 px-4 md:px-9 py-6 relative w-full">
+			<!-- 标题 -->
+			<div class="flex items-center gap-3 mb-6">
+				<Icon name="material-symbols:photo-library-outline-rounded" class="text-3xl text-[var(--primary)]" />
+				<h1 class="text-2xl font-bold text-[var(--primary)]">相册</h1>
+			</div>
+
+			<!-- 分类切换按钮 -->
+			<div class="flex flex-wrap gap-2 mb-6">
+				<button
+					class="gallery-category-btn btn-plain scale-animation rounded-lg h-10 px-4 font-bold active:scale-95 active"
+					data-category="all"
+				>
+					全部
+				</button>
+				{galleryCategories.map((category) => (
+					<button
+						class="gallery-category-btn btn-plain scale-animation rounded-lg h-10 px-4 font-bold active:scale-95"
+						data-category={category.name}
+					>
+						{category.name}
+					</button>
+				))}
+			</div>
+
+			<!-- 相册内容 -->
+			<div id="gallery-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+				{galleryCategories.map((category) =>
+					category.items.map((item, itemIndex) => {
+						const isImage = item.type === 'image';
+						const isVideo = item.type === 'video';
+						const categoryClass = `gallery-item gallery-category-${category.name}`;
+						const imageKey = `${category.name}-${item.src}`;
+						const imageData = isImage ? imageDataMap.get(imageKey) : null;
+
+						return (
+							<div class={categoryClass} data-type={item.type} data-category={category.name}>
+								{isImage && imageData && (
+									<div class="gallery-image-wrapper relative group cursor-pointer overflow-hidden rounded-xl bg-black/5 dark:bg-white/5" style="pointer-events: auto;">
+										{imageData.type === 'image' ? (
+											<Image
+												src={imageData.image}
+												alt={item.title || category.name}
+												title={item.title || category.name}
+												class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 pointer-events-none"
+												loading="lazy"
+											/>
+										) : (
+											<img
+												src={imageData.src}
+												alt={item.title || category.name}
+												title={item.title || category.name}
+												class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 pointer-events-none"
+												loading="lazy"
+											/>
+										)}
+										<div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center pointer-events-none">
+											<Icon
+												name="material-symbols:zoom-in-rounded"
+												class="text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+											/>
+										</div>
+										{item.title && (
+											<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2 text-white text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+												{item.title}
+											</div>
+										)}
+									</div>
+								)}
+								{isVideo && (
+									<div class="gallery-video-wrapper relative group overflow-hidden rounded-xl bg-black/5 dark:bg-white/5">
+										<video
+											src={item.src.startsWith('http://') || item.src.startsWith('https://') || item.src.startsWith('/') ? item.src : url(item.src)}
+											class="w-full h-full object-cover"
+											controls
+											preload="metadata"
+											poster={item.thumbnail ? (item.thumbnail.startsWith('http://') || item.thumbnail.startsWith('https://') || item.thumbnail.startsWith('/') ? item.thumbnail : url(item.thumbnail)) : undefined}
+										>
+											您的浏览器不支持视频播放。
+										</video>
+										{item.title && (
+											<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2 text-white text-xs">
+												{item.title}
+											</div>
+										)}
+									</div>
+								)}
+							</div>
+						);
+					})
+				)}
+			</div>
+
+			<!-- 空状态 -->
+			<div id="gallery-empty" class="hidden text-center py-12 text-black/50 dark:text-white/50">
+				<Icon name="material-symbols:image-not-supported-outline-rounded" class="text-6xl mb-4" />
+				<p>该分类下暂无内容</p>
+			</div>
+		</div>
+	</div>
+</MainGridLayout>
+
+<script>
+	// 分类切换功能
+	function initGallery() {
+		const categoryButtons = document.querySelectorAll('.gallery-category-btn');
+		const galleryItems = document.querySelectorAll('.gallery-item');
+		const emptyState = document.getElementById('gallery-empty');
+		const container = document.getElementById('gallery-container');
+
+		categoryButtons.forEach((button) => {
+			button.addEventListener('click', () => {
+				// 更新按钮状态
+				categoryButtons.forEach((btn) => btn.classList.remove('active'));
+				button.classList.add('active');
+
+				const selectedCategory = button.getAttribute('data-category');
+				let visibleCount = 0;
+
+				// 显示/隐藏相册项
+				galleryItems.forEach((item) => {
+					if (!(item instanceof HTMLElement)) return;
+					const itemCategory = item.getAttribute('data-category');
+					if (selectedCategory === 'all' || itemCategory === selectedCategory) {
+						item.style.display = '';
+						visibleCount++;
+					} else {
+						item.style.display = 'none';
+					}
+				});
+
+				// 显示/隐藏空状态
+				if (emptyState && container) {
+					if (visibleCount === 0) {
+						emptyState.classList.remove('hidden');
+						container.classList.add('hidden');
+					} else {
+						emptyState.classList.add('hidden');
+						container.classList.remove('hidden');
+					}
+				}
+			});
+		});
+	}
+
+	// 初始化 PhotoSwipe 用于图片查看
+	let lightboxInstance: any = null;
+	let photoSwipeLoaded = false;
+
+	async function loadPhotoSwipe() {
+		if (photoSwipeLoaded) return;
+		try {
+			await import('photoswipe/style.css');
+			photoSwipeLoaded = true;
+		} catch (error) {
+			console.error('Failed to load PhotoSwipe styles:', error);
+		}
+	}
+
+	async function initPhotoSwipe() {
+		if (typeof window === 'undefined') return;
+
+		try {
+			await loadPhotoSwipe();
+			const { default: PhotoSwipeLightbox } = await import('photoswipe/lightbox');
+			const pswpModule = await import('photoswipe');
+
+			// 先移除所有现有的事件监听器（通过数据属性标记）
+			const existingWrappers = document.querySelectorAll('.gallery-image-wrapper[data-photoswipe-initialized]');
+			existingWrappers.forEach((wrapper) => {
+				wrapper.removeAttribute('data-photoswipe-initialized');
+			});
+
+			// 为所有图片包装器绑定点击事件
+			const imageWrappers = document.querySelectorAll('.gallery-image-wrapper');
+			imageWrappers.forEach((wrapper) => {
+				if (!(wrapper instanceof HTMLElement)) return;
+				if (wrapper.hasAttribute('data-photoswipe-initialized')) return;
+				
+				wrapper.setAttribute('data-photoswipe-initialized', 'true');
+				const img = wrapper.querySelector('img');
+				if (!img || !(img instanceof HTMLImageElement)) return;
+
+				// 在包装器上绑定点击事件，而不是图片本身
+				wrapper.addEventListener('click', async (e) => {
+					e.preventDefault();
+					e.stopPropagation();
+
+					// 确保图片已加载
+					if (!img.complete || img.naturalWidth === 0) {
+						await new Promise((resolve) => {
+							if (img.complete) {
+								resolve(undefined);
+							} else {
+								img.addEventListener('load', resolve, { once: true });
+								img.addEventListener('error', resolve, { once: true });
+								// 超时保护
+								setTimeout(resolve, 3000);
+							}
+						});
+					}
+
+					try {
+						// 收集所有可见图片的数据
+						const visibleWrappers = Array.from(
+							document.querySelectorAll('.gallery-image-wrapper:not([style*="display: none"])')
+						);
+						const visibleImages = visibleWrappers
+							.map((w) => w.querySelector('img'))
+							.filter((img): img is HTMLImageElement => img instanceof HTMLImageElement);
+
+						const allData = visibleImages.map((image) => {
+							const width = image.naturalWidth || image.width || 1920;
+							const height = image.naturalHeight || image.height || 1080;
+
+							return {
+								src: image.src,
+								w: width,
+								h: height,
+								title: image.alt || image.getAttribute('title') || '',
+							};
+						});
+
+						// 找到当前点击的图片索引
+						const currentIndex = visibleImages.findIndex((image) => image === img);
+						if (currentIndex === -1) {
+							console.warn('Could not find image index');
+							return;
+						}
+
+						// 销毁之前的实例
+						if (lightboxInstance) {
+							try {
+								lightboxInstance.destroy();
+							} catch (e) {
+								// 忽略销毁错误
+							}
+						}
+
+						// 创建新的 PhotoSwipe 实例
+						const lightbox = new PhotoSwipeLightbox({
+							dataSource: allData,
+							pswpModule: () => Promise.resolve(pswpModule),
+							index: currentIndex,
+							showHideAnimationType: 'zoom',
+							zoomAnimationDuration: 200,
+							maxZoomLevel: 4,
+							closeSVG: '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg>',
+							zoomSVG: '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff"><path d="M340-540h-40q-17 0-28.5-11.5T260-580q0-17 11.5-28.5T300-620h40v-40q0-17 11.5-28.5T380-700q17 0 28.5 11.5T420-660v40h40q17 0 28.5 11.5T500-580q0 17-11.5 28.5T460-540h-40v40q0 17-11.5 28.5T380-460q-17 0-28.5-11.5T340-500v-40Zm40 220q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l224 224q11 11 11 28t-11 28q-11 11-28 11t-28-11L532-372q-30 24-69 38t-83 14Zm0-80q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>',
+							padding: { top: 20, bottom: 20, left: 20, right: 20 },
+							wheelToZoom: true,
+							arrowPrev: true,
+							arrowNext: true,
+							imageClickAction: 'close',
+							tapAction: 'toggle-controls',
+							doubleTapAction: 'zoom',
+						});
+
+						lightbox.init();
+						lightbox.loadAndOpen(currentIndex);
+						lightboxInstance = lightbox;
+					} catch (error) {
+						console.error('PhotoSwipe error:', error);
+					}
+				});
+
+				// 确保包装器可以点击
+				wrapper.style.cursor = 'pointer';
+			});
+		} catch (error) {
+			console.error('Failed to initialize PhotoSwipe:', error);
+		}
+	}
+
+	// 页面加载完成后初始化
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', () => {
+			initGallery();
+			initPhotoSwipe();
+		});
+	} else {
+		initGallery();
+		initPhotoSwipe();
+	}
+
+	// 如果使用 Swup，需要在页面切换后重新初始化
+	if (typeof window !== 'undefined' && window.swup) {
+		window.swup.hooks.on('page:view', () => {
+			setTimeout(() => {
+				initGallery();
+				// 延迟初始化 PhotoSwipe，确保 DOM 已更新
+				setTimeout(() => {
+					initPhotoSwipe();
+				}, 200);
+			}, 100);
+		});
+	}
+</script>
+
+<style>
+	.gallery-image-wrapper,
+	.gallery-video-wrapper {
+		aspect-ratio: 1;
+		min-height: 120px;
+	}
+
+	.gallery-image-wrapper img,
+	.gallery-video-wrapper video {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.gallery-category-btn.active {
+		background-color: var(--primary);
+		color: white;
+	}
+
+	@media (max-width: 640px) {
+		#gallery-container {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 0.5rem;
+		}
+
+		.gallery-image-wrapper,
+		.gallery-video-wrapper {
+			min-height: 100px;
+		}
+	}
+</style>
+

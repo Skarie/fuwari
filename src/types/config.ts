@@ -20,6 +20,9 @@ export type SiteConfig = {
 		hue: number;
 		fixed: boolean;
 	};
+	panelOpacity: {
+		opacity: number; // Default panel opacity, from 0 to 1. e.g. 0 = fully transparent, 1 = fully opaque
+	};
 	banner: {
 		enable: boolean;
 		src: string;

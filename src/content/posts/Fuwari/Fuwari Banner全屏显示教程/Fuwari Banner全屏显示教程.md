@@ -622,5 +622,5 @@ export const BANNER_HEIGHT_HOME_FOR_LAYOUT = BANNER_HEIGHT_FOR_LAYOUT + BANNER_H
 
 ---
 
-**最后更新**：2025年11月17日
+**最后更新**：2025年11月07日
 

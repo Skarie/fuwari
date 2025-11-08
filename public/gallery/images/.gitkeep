@@ -1,0 +1,8 @@
+# 相册图片目录
+
+请将相册图片放在这个目录下。
+
+支持格式：JPG、PNG、WebP 等常见图片格式。
+
+在 `src/config/gallery.ts` 中使用路径：`/gallery/images/文件名.jpg`
+

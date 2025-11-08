@@ -1,0 +1,8 @@
+# 相册视频目录
+
+请将相册视频放在这个目录下。
+
+支持格式：MP4、WebM 等常见视频格式。
+
+在 `src/config/gallery.ts` 中使用路径：`/gallery/videos/文件名.mp4`
+

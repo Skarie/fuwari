@@ -72,7 +72,9 @@ export function getStoredTheme(): LIGHT_DARK_MODE {
  * @returns 默认透明度，1.0 表示完全不透明
  */
 export function getDefaultOpacity(): number {
-	return 1.0; // 默认完全不透明
+	const fallback = "1.0";
+	const configCarrier = document.getElementById("config-carrier");
+	return Number.parseFloat(configCarrier?.dataset.opacity || fallback);
 }
 
 /**
