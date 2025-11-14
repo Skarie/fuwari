@@ -9,7 +9,7 @@ import { LinkPreset } from "./types/config";
 
 export const siteConfig: SiteConfig = {
 	title: "翊羽不会飞",
-	subtitle: "Demo Site",
+	subtitle: "记录生活点滴，分享技术与创作",
 	lang: "zh_CN", // 语言代码，例如：'en', 'zh_CN', 'zh_TW', 'ja', 'ko' 等
 	themeColor: {
 		hue: 250, // 默认主题色，范围 0 到 360。例如：0=红色，200=青色，250=青色，345=粉色
