@@ -17,9 +17,9 @@ image: https://cdn.mengze.vip/gh/Skarie/hexoimg/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A
 
 ### 1. 注册EasyTier账号
 1. 访问[EasyTier官网](https://easytier.cn/)，点击进入"web控制台"  
-   ![注册入口](飞牛nas用EasyTier实现异地组网/1.png)
+   ![注册入口](./1.png)
 2. 完成账号注册并登录（请牢记用户名和密码）  
-   ![注册页面](飞牛nas用EasyTier实现异地组网/2.png)
+   ![注册页面](./2.png)
 
 
 ### 2. 配置飞牛NAS的Docker环境
@@ -61,21 +61,21 @@ services:
 ```
 
 4. 点击确认后，选择「构建项目」  
-   ![Docker配置](飞牛nas用EasyTier实现异地组网/3.png)  
-   ![构建项目](飞牛nas用EasyTier实现异地组网/4.png)
+   ![Docker配置](./3.png)  
+   ![构建项目](./4.png)
 
 
 ### 3. 创建EasyTier网络
 1. 返回EasyTier的web控制台，进入「设备列表」→「设置」→「创建新网络」  
-   ![创建网络入口](飞牛nas用EasyTier实现异地组网/5.png)
+   ![创建网络入口](./5.png)
 2. 网络类型默认选择「动态ipv4」，填写网络名称和密码
 3. 服务器选择：
    - 可直接使用默认公共服务器
    - 也可从[EasyTier公共服务器列表](https://easytier.gd.nkbpal.cn/status/easytier)选择支持中转的服务器  
-     ![服务器选择](飞牛nas用EasyTier实现异地组网/6.png) ![服务器列表](飞牛nas用EasyTier实现异地组网/7.png)
+     ![服务器选择](./6.png) ![服务器列表](./7.png)
 4. 点击「高级设置」，找到「子网代理CIDR」
 5. 输入需要访问的网段（例如NAS内网IP为`192.168.1.6:5666`，则填写`192.168.1.0/24`）  
-   ![子网配置](飞牛nas用EasyTier实现异地组网/8.png)
+   ![子网配置](./8.png)
 6. 点击「运行网络」完成配置
 
 
@@ -91,7 +91,7 @@ services:
 
 ### 5. 验证连接
 当web控制台显示手机端、Windows端与NAS设备均处于「P2P」连接状态时，说明组网成功。此时可直接通过内网IP+端口号访问飞牛NAS（例如：`http://192.168.1.6:5666`）。  
-![连接状态验证](飞牛nas用EasyTier实现异地组网/9.png)
+![连接状态验证](./9.png)
 
 
 ## 注意事项
