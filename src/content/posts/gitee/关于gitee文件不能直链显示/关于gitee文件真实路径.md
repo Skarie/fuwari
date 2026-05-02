@@ -4,7 +4,7 @@ published: 2025-05-26
 tags:
   - gitee
 category: gitee
-image: https://cdn.mengze.vip/gh/Skarie/photo/images/【哲风壁纸】个性写真-时尚少女.png
+image: https://v6.gh-proxy.org/https://github.com/Skarie/photo/blob/main/images/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E4%B8%AA%E6%80%A7%E5%86%99%E7%9C%9F-%E6%97%B6%E5%B0%9A%E5%B0%91%E5%A5%B3.png?raw=true
 category_bar: "true"
 ---
 
