@@ -105,9 +105,9 @@ networks:
 
 部署完成后，在容器页面可看到 `astrbot` 和 `napcat` 两个容器：
 
-* **AstrBot**: `http://<IP>:6185` — 机器人主控制台
+- **AstrBot**: `http://<IP>:6185` — 机器人主控制台
 
-* **NapCat**: `http://<IP>:6099` — QQ 协议端管理界面  
+- **NapCat**: `http://<IP>:6099` — QQ 协议端管理界面  
 
 也可直接点击容器列表中的快捷链接打开。
 
