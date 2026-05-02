@@ -45,12 +45,12 @@ sdocker/                                    # Docker 项目总目录(�
 
 3. 填写配置：
 
-   - **项目名称**: `astrbot_napcat`
+* **项目名称**: `astrbot_napcat`
 
-   - **项目路径**: `vol1/1000/sdocker/AstrBot-NapCat`（选择实际路径）
+* **项目路径**: `vol1/1000/sdocker/AstrBot-NapCat`（选择实际路径）
 
 
-4. 在编辑器中粘贴以下 `docker-compose.yml` 内容：
+1. 在编辑器中粘贴以下 `docker-compose.yml` 内容:
 
 ```yaml
 # docker-compose.yml
@@ -105,9 +105,9 @@ networks:
 
 部署完成后，在容器页面可看到 `astrbot` 和 `napcat` 两个容器：
 
-- **AstrBot**: `http://<IP>:6185` — 机器人主控制台
+* **AstrBot**: `http://<IP>:6185` — 机器人主控制台
 
-- **NapCat**: `http://<IP>:6099` — QQ 协议端管理界面  
+* **NapCat**: `http://<IP>:6099` — QQ 协议端管理界面  
 
 也可直接点击容器列表中的快捷链接打开。
 
@@ -150,10 +150,10 @@ sudo docker logs -f napcat
 ![](./5.png)
 
 4. 填写配置：
-   - **URL**: `ws://astrbot:6199/ws`
-   - **Token**: 自定义 Token（与 AstrBot 配置保持一致）
-   - **心跳间隔**: `5000`
-   - **重连间隔**: `5000`
+- **URL**: `ws://astrbot:6199/ws`
+- **Token**: 自定义 Token（与 AstrBot 配置保持一致）
+- **心跳间隔**: `5000`
+- **重连间隔**: `5000`
 
 5. 点击 **保存**
 
@@ -166,12 +166,12 @@ sudo docker logs -f napcat
 2. 进入 **机器人** 菜单 → **创建机器人**
 
 3. 填写配置：
-   - **消息平台**: `OneBot`
-   - **机器人名称**: 自定义
-   - **启用**: ✅ 勾选
-   - **反向 WebSocket 主机**: `astrbot`
-   - **反向 WebSocket 端口**: `6199`
-   - **Access Token**: 与 NapCat 配置的 Token 保持一致
+- **消息平台**: `OneBot`
+- **机器人名称**: 自定义
+- **启用**: ✅ 勾选
+- **反向 WebSocket 主机**: `astrbot`
+- **反向 WebSocket 端口**: `6199`
+- **Access Token**: 与 NapCat 配置的 Token 保持一致
 
 4. 点击 **保存**
 
