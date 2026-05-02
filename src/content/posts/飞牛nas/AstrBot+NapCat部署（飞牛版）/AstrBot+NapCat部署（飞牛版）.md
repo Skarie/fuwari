@@ -44,8 +44,11 @@ sdocker/                                    # Docker 项目总目录(�
 2. 点击右上角 **新增项目**
 
 3. 填写配置：
+
    - **项目名称**: `astrbot_napcat`
+
    - **项目路径**: `vol1/1000/sdocker/AstrBot-NapCat`（选择实际路径）
+
 
 4. 在编辑器中粘贴以下 `docker-compose.yml` 内容：
 
