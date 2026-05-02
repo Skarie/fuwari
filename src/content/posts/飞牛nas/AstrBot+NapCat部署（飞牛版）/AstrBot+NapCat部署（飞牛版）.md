@@ -36,7 +36,7 @@ sdocker/                                    # Docker 项目总目录(�
     
 > 可根据实际情况调整路径，下图示例使用 `vol1/1000/sdocker/AstrBot-NapCat`
 
-![](AstrBot+NapCat部署（飞牛版）/1.png)
+![](./1.png)
 ### 2. 创建 Docker Compose 项目
 
 1. 打开 Docker 管理界面，点击侧边栏 **Compose**
@@ -93,7 +93,7 @@ networks:
 
 6. 点击 **确认**
 
-![](AstrBot+NapCat部署（飞牛版）/2.png)
+![](./2.png)
 
 ---
 ## 三、登录与配置
@@ -108,7 +108,7 @@ networks:
 
 也可直接点击容器列表中的快捷链接打开。
 
-![](AstrBot+NapCat部署（飞牛版）/3.png)
+![](./3.png)
 
 ### 2. 配置 NapCat
 
@@ -134,7 +134,7 @@ sudo docker logs -f napcat
 04-30 21:55:57 [info] [NapCat] [WebUi] WebUi User Panel Url: http://[::]:6099/webui?token=ee0781cbae4f
 ```
 
-![](AstrBot+NapCat部署（飞牛版）/4.png)
+![](./4.png)
 
 #### 2.2 登录并配置网络
 
@@ -144,7 +144,7 @@ sudo docker logs -f napcat
 
 3. 进入 **网络配置** → 点击 **编辑**
 
-![](AstrBot+NapCat部署（飞牛版）/5.png)
+![](./5.png)
 
 4. 填写配置：
    - **URL**: `ws://astrbot:6199/ws`
@@ -154,7 +154,7 @@ sudo docker logs -f napcat
 
 5. 点击 **保存**
 
-![](AstrBot+NapCat部署（飞牛版）/6.png)
+![](./6.png)
 
 ### 3. 配置 AstrBot
 
@@ -172,7 +172,7 @@ sudo docker logs -f napcat
 
 4. 点击 **保存**
 
-![](AstrBot+NapCat部署（飞牛版）/7.png)
+![](./7.png)
 
 ---
 ## 四、部署完成
