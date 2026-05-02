@@ -5,7 +5,7 @@ tags:
   - 飞牛nas
   - WatchCow
 category: 飞牛nas
-image: https://cdn.mengze.vip/gh/Skarie/hexoimg/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%8F%91%E4%B8%9D-%E6%89%8B%E7%BB%98%E5%B0%91%E5%A5%B3.png
+image: https://v6.gh-proxy.org/https://github.com/Skarie/hexoimg/blob/main/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%8F%91%E4%B8%9D-%E6%89%8B%E7%BB%98%E5%B0%91%E5%A5%B3.png
 ---
 
 # WatchCow 食用指南：让Docker容器秒变飞牛OS原生应用

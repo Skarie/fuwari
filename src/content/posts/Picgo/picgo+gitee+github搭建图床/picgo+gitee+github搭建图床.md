@@ -4,7 +4,7 @@ published: 2025-06-01
 tags:
   - Picgo
 category: Picgo
-image: https://cdn.mengze.vip/gh/Skarie/hexoimg/【哲风壁纸】仰拍树林-仰视.png
+image: https://v6.gh-proxy.org/https://github.com/Skarie/hexoimg/blob/main/【哲风壁纸】仰拍树林-仰视.png
 ---
 # Picgo+gitee
 

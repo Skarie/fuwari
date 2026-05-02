@@ -4,7 +4,7 @@ published: 2025-06-12
 tags:
   - Typora
 category: Typora
-image: https://cdn.mengze.vip/gh/Skarie/hexoimg/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%8F%A4%E5%BB%BA%E7%AD%91%E5%A3%81%E7%BA%B8-%E5%A3%81%E7%BA%B8.png
+image: https://v6.gh-proxy.org/https://github.com/Skarie/hexoimg/blob/main/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%8F%A4%E5%BB%BA%E7%AD%91%E5%A3%81%E7%BA%B8-%E5%A3%81%E7%BA%B8.png
 ---
 多说无益，详细信息请[点击我](https://github.com/Skarie/typora-theme-github-Skarie)
 

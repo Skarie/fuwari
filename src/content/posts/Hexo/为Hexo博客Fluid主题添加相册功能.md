@@ -4,7 +4,7 @@ published: 2025-05-20
 tags:
   - Hexo
 category: Hexo
-image: https://cdn.mengze.vip/gh/Skarie/hexoimg/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E4%BC%91%E9%97%B2%E7%BE%8E%E5%A5%B3-%E5%9C%A3%E8%AF%9E%E6%A0%91.png
+image: https://v6.gh-proxy.org/https://github.com/Skarie/hexoimg/blob/main/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E4%BC%91%E9%97%B2%E7%BE%8E%E5%A5%B3-%E5%9C%A3%E8%AF%9E%E6%A0%91.png
 ---
 
 # 为 Hexo 博客 Fluid 主题添加相册功能

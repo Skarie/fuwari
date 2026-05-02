@@ -5,7 +5,7 @@ tags:
   - 云计算
   - docker
 category: 云计算
-image: https://cdn.mengze.vip/gh/Skarie/hexoimg/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%9C%B0%E9%93%81%E5%9C%BA%E6%99%AF-%E6%88%B4%E7%9C%BC%E9%95%9C.png
+image: https://v6.gh-proxy.org/https://github.com/Skarie/hexoimg/blob/main/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%9C%B0%E9%93%81%E5%9C%BA%E6%99%AF-%E6%88%B4%E7%9C%BC%E9%95%9C.png
 ---
 
 # Docker实训步骤（WordPress网站容器化部署）

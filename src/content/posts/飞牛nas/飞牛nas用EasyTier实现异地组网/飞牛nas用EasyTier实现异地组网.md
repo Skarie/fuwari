@@ -4,7 +4,7 @@ published: 2025-08-26
 tags:
   - 飞牛nas
 category: 飞牛nas
-image: https://cdn.mengze.vip/gh/Skarie/hexoimg/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E6%87%92%E7%BE%8A%E7%BE%8A-%E7%9D%A1%E8%A7%89.png
+image: https://v6.gh-proxy.org/https://github.com/Skarie/hexoimg/blob/main/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E6%87%92%E7%BE%8A%E7%BE%8A-%E7%9D%A1%E8%A7%89.png
 ---
 
 # 飞牛NAS通过EasyTier实现异地组网

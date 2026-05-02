@@ -5,7 +5,7 @@ tags:
   - Hexo
   - Fluid
 category: Hexo
-image: https://cdn.mengze.vip/gh/Skarie/hexoimg/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%AD%A4%E6%A0%91-%E6%A0%91%E6%9C%A8-%E6%B9%96%E6%99%AF.png
+image: https://v6.gh-proxy.org/https://github.com/Skarie/hexoimg/blob/main/%E3%80%90%E5%93%B2%E9%A3%8E%E5%A3%81%E7%BA%B8%E3%80%91%E5%AD%A4%E6%A0%91-%E6%A0%91%E6%9C%A8-%E6%B9%96%E6%99%AF.png
 category_bar: "true"
 ---
 
