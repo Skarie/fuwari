@@ -28,10 +28,15 @@ image: https://v6.gh-proxy.org/https://github.com/Skarie/hexoimg/blob/main/%E3%8
 创建项目目录结构：
 
 sdocker/                                    # Docker 项目总目录(这里你可以命名为docker)
+
 └── AstrBot-NapCat/          # 本项目目录
+
     ├── docker-compose.yml  # 编排文件
+
     ├── data/                          # AstrBot 数据
+
     ├── napcat/config/          # NapCat 配置
+
     └── ntqq/                         # QQ 登录信息
     
 > 可根据实际情况调整路径，下图示例使用 `vol1/1000/sdocker/AstrBot-NapCat`
